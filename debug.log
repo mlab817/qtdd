@@ -1,0 +1,2 @@
+[0101/135720.997:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[0101/135720.997:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\mlab8\AppData\Local\BraveSoftware\Brave-Browser\User Data\Crashpad\attachments\3777242a-f509-45c0-8786-29ee0f308e34: The system cannot find the path specified. (0x3)
