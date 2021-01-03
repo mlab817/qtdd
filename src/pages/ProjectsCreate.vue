@@ -53,6 +53,10 @@
 
               <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
               <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+
+              <div class="row justify-end">
+                <q-btn icon-right="arrow_right" label="Next" no-caps />
+              </div>
             </q-tab-panel>
 
             <q-tab-panel name="trip_information">
