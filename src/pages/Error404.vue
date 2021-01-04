@@ -1,8 +1,8 @@
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
+  <div class="fullscreen text-white text-center q-pa-md flex flex-center">
     <div>
       <div style="font-size: 30vh">
-        404
+        <img src="../statics/undraw/undraw_page_not_found_su7k.svg" style="max-width: 80%;" >
       </div>
 
       <div class="text-h2" style="opacity:.4">
@@ -12,7 +12,7 @@
       <q-btn
         class="q-mt-xl"
         color="white"
-        text-color="blue"
+        text-color="primary"
         unelevated
         to="/"
         label="Go Home"

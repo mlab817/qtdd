@@ -74,9 +74,7 @@ export default {
   },
   methods: {
     searchProjects() {
-      if (this.query) {
-        this.getProjects(this.page, this.query)
-      }
+      this.getProjects(this.page, this.query)
     },
     viewProject(slug) {
       this.$router.push(`/projects/${slug}`)
@@ -97,6 +95,7 @@ export default {
       ProjectAPI
         .index({ params: { page: page, query: this.query } })
         .then(res => {
+          console.log(res)
           const {
             data,
             meta
