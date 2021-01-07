@@ -7,7 +7,11 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'projects/create', component: () => import('pages/ProjectsCreate.vue') },
       { path: 'projects/:slug', component: () => import('pages/ProjectsShow.vue') },
-      { path: 'projects', component: () => import('pages/ProjectsIndex.vue') }
+      {
+        path: 'projects',
+        name: 'index-projects',
+        component: () => import('pages/ProjectsIndex.vue')
+      }
     ]
   },
 

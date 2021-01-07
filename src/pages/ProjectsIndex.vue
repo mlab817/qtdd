@@ -20,6 +20,8 @@
             class="col"
             placeholder="Search for projects..."
             @keyup.enter="searchProjects"
+            @input="searchProjects"
+            debounce="500"
             hint="Press Enter to search">
             <template v-slot:append>
               <q-icon name="send" @click="searchProjects" class="cursor-pointer" color="primary" />
@@ -47,7 +49,7 @@
           :max-pages="10"
           :max="lastPage"
           :direction-links="true"
-          @input="getProjects"
+          @input="navigatePage"
         >
         </q-pagination>
       </div>
@@ -70,12 +72,24 @@ export default {
       query: null,
       currentPage: 1,
       lastPage: 1,
-      loading: false
+      loading: false,
+      limit: 10
+    }
+  },
+  watch: {
+    $route: function(to, from) {
+      const query = to.query
+      console.log(query)
     }
   },
   methods: {
     searchProjects() {
-      this.getProjects(this.page, this.query)
+      this.$router.push({
+        name: 'index-projects',
+        query: {
+          query: this.query
+        }
+      })
     },
     viewProject(slug) {
       this.$router.push(`/projects/${slug}`)
@@ -91,10 +105,21 @@ export default {
         // TODO: Implement deletion
       })
     },
-    getProjects(page = 1) {
-      this.loading = true
+    navigatePage(e) {
+      const query = {}
+      query.page = this.currentPage
+      query.query = this.query ? this.query : undefined
+      this.$router.push({
+        name: 'index-projects',
+        query: query
+      })
+    },
+    getProjects() {
+      const page = this.currentPage ? this.currentPage : 1,
+        query = this.query ? this.query : null,
+        limit = this.limit ? this.limit : 10
       ProjectAPI
-        .index({ params: { page: page, query: this.query } })
+        .index({ params: { page: page, query: query, limit: limit } })
         .then(res => {
           console.log(res)
           const {
@@ -110,7 +135,11 @@ export default {
     }
   },
   created() {
-    this.getProjects(this.currentPage)
+    console.log(this.$route)
+    this.page = this.$route.query.page ? this.$route.query.page : 1
+    this.limit = this.$route.query.limit ? this.$route.query.limit : 10
+    this.query = this.$route.query.query ? this.$route.query.query : null
+    this.getProjects()
     ProjectAPI.index()
       .then(res => console.log(res))
   }
