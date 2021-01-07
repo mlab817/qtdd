@@ -1,5 +1,5 @@
 <template>
-  <q-item-label class="text-subtitle1 q-mt-md">
+  <q-item-label class="text-subtitle2 q-mt-md">
     {{ label }} <span class="text-negative">{{ required ? '*': '' }}</span>
   </q-item-label>
 </template>

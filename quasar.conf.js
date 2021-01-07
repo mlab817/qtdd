@@ -21,6 +21,7 @@ module.exports = function (/* ctx */) {
     boot: [
 
       'axios',
+      'echarts',
       'vmoney'
     ],
 

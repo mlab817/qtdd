@@ -13,8 +13,11 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.0",
     "quasar": "^1.0.0",
-    "v-money": "^0.8.1"
+    "v-money": "^0.8.1",
+    "vue-echarts": "^5.0.0-beta.0",
+    "vue-echarts-v3": "^2.0.1"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

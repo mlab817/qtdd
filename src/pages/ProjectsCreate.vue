@@ -281,7 +281,7 @@
               <q-select v-model="project.funding_source_id" :options="options.funding_sources" outlined dense square />
 
               <form-label label="Other Funding Source" />
-              <q-option-group v-model="project.funding_sources" :options="options.fundig_sources" type="checkbox" />
+              <q-option-group v-model="project.funding_sources" :options="options.funding_sources" type="checkbox" />
 
               <form-label label="Funding Institutions" :required="true" />
               <q-select

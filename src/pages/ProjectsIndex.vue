@@ -44,6 +44,7 @@
       <div class="row justify-center q-my-md" v-if="projects.length > 0">
         <q-pagination
           v-model="currentPage"
+          :max-pages="10"
           :max="lastPage"
           :direction-links="true"
           @input="getProjects"
