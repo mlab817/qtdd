@@ -2,7 +2,7 @@
   <q-markup-table dense flat bordered square separator="horizontal">
     <thead>
       <q-tr>
-        <q-td>Operating Unit</q-td>
+        <q-td>{{ itemName }}</q-td>
         <q-td class="text-right">2016 &amp; Prior</q-td>
         <q-td class="text-right">2017</q-td>
         <q-td class="text-right">2018</q-td>
@@ -20,7 +20,7 @@
     <tbody>
       <template v-if="model && model.length">
         <q-tr v-for="(item, index) in model" :key="index">
-          <q-td>{{ item.operating_unit && (item.operating_unit.name || item.operating_unit.label) }}</q-td>
+          <q-td>{{ item.selected && (item.selected.name || item.selected.label) }}</q-td>
           <q-td class="text-right">{{ item.y2016 && item.y2016.toLocaleString() }}</q-td>
           <q-td class="text-right">{{ item.y2017 && item.y2017.toLocaleString() }}</q-td>
           <q-td class="text-right">{{ item.y2018 && item.y2018.toLocaleString() }}</q-td>
@@ -51,7 +51,7 @@
       </template>
       <q-tr>
         <q-td>
-          <q-select v-model="newItem.operating_unit" :options="filteredOptions" dense square outlined />
+          <q-select v-model="newItem.selected" :options="filteredOptions" dense square outlined />
         </q-td>
         <q-td>
           <money-input v-model="newItem.y2016" />
@@ -114,10 +114,24 @@ import MoneyInput from 'components/MoneyInput'
 export default {
   components: { MoneyInput },
   name: 'OuInvestments',
-  props: ['value'],
+  props: {
+    value: Array,
+    option: {
+      type: String,
+      required: true
+    },
+    itemId: {
+      type: String,
+      required: true
+    },
+    itemName: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
-    operating_units() {
-      return this.$store.state.options.operating_units
+    options() {
+      return this.$store.state.options[this.option]
     },
     model: {
       get() {
@@ -128,21 +142,20 @@ export default {
       }
     },
     filteredOptions() {
-      const operatingUnits = this.operating_units
+      const options = this.options
       if (this.model.length) {
-        const selectedOus = this.model.map(x => (x.operating_unit && x.operating_unit.value))
-        return operatingUnits.filter(ou => {
-          return !selectedOus.includes(ou.value)
+        const selected = this.model.map(x => (x[this.option] && x[this.option].value))
+        return options.filter(opt => {
+          return !selected.includes(opt.value)
         })
       }
-      return operatingUnits
+      return options
     }
   },
   data() {
     return {
       newItem: {
-        operating_unit_id: null,
-        operating_unit: null,
+        selected: null,
         y2016: 0,
         y2017: 0,
         y2018: 0,
@@ -159,12 +172,11 @@ export default {
   methods: {
     addItem() {
       const itemToAdd = this.newItem
-      if (itemToAdd.operating_unit) {
-        itemToAdd.operating_unit_id = this.newItem.operating_unit.value
+      if (itemToAdd.selected) {
+        itemToAdd[this.itemId] = itemToAdd.selected && itemToAdd.selected.value
         this.model.push(itemToAdd)
         this.newItem = {
-          operating_unit_id: null,
-          operating_unit: null,
+          selected: null,
           y2016: 0,
           y2017: 0,
           y2018: 0,
@@ -177,7 +189,7 @@ export default {
           y2025: 0
         }
       } else {
-        alert('You must select an operating unit to save.')
+        alert('You must select an option to save.')
       }
     },
     editItem(item, index) {

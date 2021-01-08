@@ -114,10 +114,10 @@ import MoneyInput from 'components/MoneyInput'
 export default {
   components: { MoneyInput },
   name: 'RegionInvestments',
-  props: ['value'],
+  props: ['value', 'option'],
   computed: {
     options() {
-      return this.$store.state.options.regions
+      return this.$store.state.options[this.option]
     },
     model: {
       get() {

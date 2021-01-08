@@ -414,7 +414,7 @@
               <custom-input v-model="project.uacs_code" placeholder="e.g. 05001123456789" />
 
               <form-label label="Total Investment Requirement by Operating Unit" />
-              <ou-investments v-model="project.ou_investments"></ou-investments>
+              <ou-investments option="operating_units" item-id="operating_unit_id" item-name="Operating Unit" v-model="project.ou_investments"></ou-investments>
 
               <div class="row justify-between q-mt-md">
                 <q-btn icon="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
