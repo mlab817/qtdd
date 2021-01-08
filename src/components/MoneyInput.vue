@@ -1,10 +1,11 @@
 <template>
   <q-field
-    outlined
     v-model="money"
     :label="label"
     dense
     :readonly="readonly"
+    borderless
+    filled
   >
     <template v-slot:control="{ id, floatingLabel, value, emitValue }">
       <money

@@ -24,9 +24,10 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
+      :width="250"
+      :breakpoint="360"
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-primary text-white"
     >
       <q-list>
         <q-item-label

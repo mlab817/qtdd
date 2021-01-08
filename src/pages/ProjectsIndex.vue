@@ -135,8 +135,11 @@ export default {
         .finally(() => (this.loading = false))
     }
   },
-  created() {
-    this.getProjects(null)
+  mounted() {
+    const params = this.$route.query
+    this.getProjects(params)
+    this.$axios.get('/pdp_indicators')
+      .then(res => console.log(res.data.data))
   }
 }
 </script>

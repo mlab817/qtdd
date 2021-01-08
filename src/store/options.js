@@ -4,7 +4,9 @@ const transformOptions = (data) => {
   return data.map(d => {
     return {
       value: d.id,
-      label: d.name
+      label: d.name,
+      children: d.children ? d.children : undefined,
+      description: d.description ? d.description : undefined
     }
   })
 }
@@ -29,7 +31,9 @@ const state = () => {
     funding_sources: [],
     implementation_modes: [],
     gads: [],
-    funding_institutions: []
+    funding_institutions: [],
+    pdp_indicators: [],
+    infrastructure_sectors: []
   }
 }
 
@@ -55,6 +59,8 @@ const actions = {
     dispatch('loadOption', 'funding_institutions')
     dispatch('loadOption', 'implementation_modes')
     dispatch('loadOption', 'gads')
+    dispatch('loadOption', 'pdp_indicators')
+    dispatch('loadOption', 'infrastructure_sectors')
   },
   loadOption({ commit }, options) {
     axiosInstance.get(`/${options}`)

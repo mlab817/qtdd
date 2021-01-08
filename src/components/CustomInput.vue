@@ -1,11 +1,12 @@
 <template>
   <q-input
-    outlined
     square
     dense
     v-model="model"
     :type="!type ? 'text' : type"
-    :placeholder="placeholder">
+    :placeholder="placeholder"
+    borderless
+    filled>
     <template v-slot:append>
       <span class="text-caption">
         {{ model && model.length }}
