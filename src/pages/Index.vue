@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="row q-col-gutter-md">
-      <div class="col">
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <bar-chart />
       </div>
       <div class="col"></div>

@@ -10,7 +10,7 @@
         <q-btn color="secondary" label="New Project" no-caps unelevated to="/projects/create" />
       </div>
       <div class="row q-pa-md">
-        <search-projects v-model="query" @input="searchProjects" />
+        <search-projects v-model="q" @input="searchProjects" />
       </div>
       <template v-if="loading">
         <div class="row items-center justify-center q-pa-md">
@@ -22,15 +22,22 @@
           <q-item v-for="project in projects" :key="project.id" :clickable="project.permissions.view" @click.stop="viewProject(project.slug)">
             <q-item-section avatar>
               <q-avatar class="bg-primary text-white">
-                {{project.title && project.title.charAt(0)}}
+                {{ project.office && project.office.acronym && project.office.acronym.charAt(0) }}
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-uppercase">{{ project.title }}</q-item-label>
-              <q-item-label caption :lines="2">{{ project.description }}</q-item-label>
+              <q-item-label class="text-uppercase" v-html="$options.filters.searchHighlight(project.title, q)" />
+              <q-item-label caption :lines="2" v-html="$options.filters.searchHighlight(project.description, q)" />
+              <q-item-label>
+                <q-badge :label="project.pap_type && project.pap_type.name" color="amber-14"></q-badge>
+              </q-item-label>
             </q-item-section>
             <q-item-section side>
-              <q-icon name="bookmark" color="grey-5" />
+              <q-icon name="bookmark" color="grey-5" @click.stop="bookmarkThisProject(project.slug)">
+                <q-tooltip>
+                  Bookmark this project
+                </q-tooltip>
+              </q-icon>
             </q-item-section>
           </q-item>
           <div class="row justify-center q-my-md">
@@ -45,8 +52,8 @@
           </div>
         </template>
         <div class="row q-pa-md justify-center" v-else>
-          <template v-if="query">
-            No search results for "<span class="text-weight-bold">{{ query }}</span>".
+          <template v-if="q">
+            No search results for "<span class="text-weight-bold">{{ q }}</span>".
           </template>
           <template v-else>
             No projects found.
@@ -68,7 +75,7 @@ export default {
   data () {
     return {
       projects: [],
-      query: null,
+      q: null,
       currentPage: 1,
       lastPage: 1,
       loading: false,
@@ -112,7 +119,7 @@ export default {
       this.$router.push({
         name: 'index-projects',
         query: {
-          query: this.query,
+          q: this.q,
           page: page
         }
       })
@@ -133,6 +140,20 @@ export default {
         })
         .catch(err => console.log(err.message))
         .finally(() => (this.loading = false))
+    },
+    bookmarkThisProject(slug) {
+      alert(slug)
+    }
+  },
+  filters: {
+    searchHighlight(value, search) {
+      if (search) {
+        const searchRegExp = new RegExp(search, 'ig')
+        return value && value.replace(searchRegExp, match => {
+          return `<span class="bg-yellow-6">${match}</span>`
+        })
+      }
+      return value
     }
   },
   mounted() {

@@ -109,7 +109,7 @@ export default {
             textStyle: {
               color: '#fff'
             },
-            formatter: '{value} M'
+            formatter: '{value} B'
           }
         },
         dataZoom: [
@@ -188,16 +188,16 @@ export default {
         console.log(res.data)
         const reduced = res.data.data && res.data.data.reduce((acc, cur) => {
           const { investment } = cur
-          acc['2016'] += (investment && Math.round(investment.y2016 / 1000000)) || 0
-          acc['2017'] += (investment && Math.round(investment.y2017 / 1000000)) || 0
-          acc['2018'] += (investment && Math.round(investment.y2018 / 1000000)) || 0
-          acc['2019'] += (investment && Math.round(investment.y2019 / 1000000)) || 0
-          acc['2020'] += (investment && Math.round(investment.y2020 / 1000000)) || 0
-          acc['2021'] += (investment && Math.round(investment.y2021 / 1000000)) || 0
-          acc['2022'] += (investment && Math.round(investment.y2022 / 1000000)) || 0
-          acc['2023'] += (investment && Math.round(investment.y2023 / 1000000)) || 0
-          acc['2024'] += (investment && Math.round(investment.y2024 / 1000000)) || 0
-          acc['2025'] += (investment && Math.round(investment.y2025 / 1000000)) || 0
+          acc['2016'] += (investment && Math.round(investment.y2016 / 1000000000)) || 0
+          acc['2017'] += (investment && Math.round(investment.y2017 / 1000000000)) || 0
+          acc['2018'] += (investment && Math.round(investment.y2018 / 1000000000)) || 0
+          acc['2019'] += (investment && Math.round(investment.y2019 / 1000000000)) || 0
+          acc['2020'] += (investment && Math.round(investment.y2020 / 1000000000)) || 0
+          acc['2021'] += (investment && Math.round(investment.y2021 / 1000000000)) || 0
+          acc['2022'] += (investment && Math.round(investment.y2022 / 1000000000)) || 0
+          acc['2023'] += (investment && Math.round(investment.y2023 / 1000000000)) || 0
+          acc['2024'] += (investment && Math.round(investment.y2024 / 1000000000)) || 0
+          acc['2025'] += (investment && Math.round(investment.y2025 / 1000000000)) || 0
           return acc
         }, {
           2016: 0,
@@ -216,16 +216,16 @@ export default {
 
         const reduced2 = res.data.data && res.data.data.reduce((acc2, cur2) => {
           const { infrastructure } = cur2
-          acc2['2016'] += (infrastructure && Math.round(infrastructure.y2016 / 1000000)) || 0
-          acc2['2017'] += (infrastructure && Math.round(infrastructure.y2017 / 1000000)) || 0
-          acc2['2018'] += (infrastructure && Math.round(infrastructure.y2018 / 1000000)) || 0
-          acc2['2019'] += (infrastructure && Math.round(infrastructure.y2019 / 1000000)) || 0
-          acc2['2020'] += (infrastructure && Math.round(infrastructure.y2020 / 1000000)) || 0
-          acc2['2021'] += (infrastructure && Math.round(infrastructure.y2021 / 1000000)) || 0
-          acc2['2022'] += (infrastructure && Math.round(infrastructure.y2022 / 1000000)) || 0
-          acc2['2023'] += (infrastructure && Math.round(infrastructure.y2023 / 1000000)) || 0
-          acc2['2024'] += (infrastructure && Math.round(infrastructure.y2024 / 1000000)) || 0
-          acc2['2025'] += (infrastructure && Math.round(infrastructure.y2025 / 1000000)) || 0
+          acc2['2016'] += (infrastructure && Math.round(infrastructure.y2016 / 1000000000)) || 0
+          acc2['2017'] += (infrastructure && Math.round(infrastructure.y2017 / 1000000000)) || 0
+          acc2['2018'] += (infrastructure && Math.round(infrastructure.y2018 / 1000000000)) || 0
+          acc2['2019'] += (infrastructure && Math.round(infrastructure.y2019 / 1000000000)) || 0
+          acc2['2020'] += (infrastructure && Math.round(infrastructure.y2020 / 1000000000)) || 0
+          acc2['2021'] += (infrastructure && Math.round(infrastructure.y2021 / 1000000000)) || 0
+          acc2['2022'] += (infrastructure && Math.round(infrastructure.y2022 / 1000000000)) || 0
+          acc2['2023'] += (infrastructure && Math.round(infrastructure.y2023 / 1000000000)) || 0
+          acc2['2024'] += (infrastructure && Math.round(infrastructure.y2024 / 1000000000)) || 0
+          acc2['2025'] += (infrastructure && Math.round(infrastructure.y2025 / 1000000000)) || 0
           return acc2
         }, {
           2016: 0,

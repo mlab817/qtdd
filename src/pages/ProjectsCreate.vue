@@ -378,6 +378,11 @@
                   </q-item-section>
                 </q-item>
               </q-list>
+
+              <div class="row justify-between q-mt-md">
+                <q-btn icon="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
+                <q-btn icon-right="arrow_right" label="Next" no-caps @click="nextTab" color="primary" />
+              </div>
             </q-tab-panel>
 
             <q-tab-panel :name="6">

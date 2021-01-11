@@ -12,7 +12,7 @@
           {{project.description}}
         </div>
         <div class="row items-center">
-          <q-icon name="person" /> &nbsp;Created by {{(project.creator && project.creator.name) || '-'}}
+          <q-icon name="person" /> &nbsp;Created by {{(project.creator && project.creator.name) || '-'}} on {{project.created_at}}
         </div>
         <div class="row items-center">
           <q-icon name="event" /> &nbsp;Last updated by {{ (project.updater && project.updater.name) || '-'}} on {{project.updated_at}}
@@ -28,7 +28,7 @@
       <q-card square flat bordered class="bg-grey-1 q-pa-md">
         <q-item-label header>Basic Information</q-item-label>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>PAP Type</q-item-label>
@@ -36,7 +36,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Regular Program</q-item-label>
@@ -78,7 +78,7 @@
           </q-item>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Spatial Coverage</q-item-label>
@@ -86,7 +86,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-9">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Regions Covered</q-item-label>
@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Implementation Period</q-item-label>
@@ -108,7 +108,7 @@
         <q-separator />
         <q-item-label header>Inclusion to Planning Documents</q-item-label>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Public Investment Program</q-item-label>
@@ -120,7 +120,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Typology</q-item-label>
@@ -128,7 +128,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>R&D?</q-item-label>
@@ -140,7 +140,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Core Investment Program/Project</q-item-label>
@@ -152,7 +152,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Type of CIP</q-item-label>
@@ -160,7 +160,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>ICC-able and Status</q-item-label>
@@ -178,7 +178,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Three-Year Rolling Infrastructure Program</q-item-label>
@@ -190,7 +190,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Regional Development Investment Program</q-item-label>
@@ -212,7 +212,7 @@
         <q-separator />
         <q-item-label header>TRIP Information</q-item-label>
         <div class="row">
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>
@@ -225,7 +225,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-3">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>
@@ -261,7 +261,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="col-9">
+          <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Other PDP Chapters</q-item-label>
@@ -314,6 +314,209 @@
               <q-item-section>
                 <q-item-label caption>Employment Generated</q-item-label>
                 <q-item-label>{{ project.employment_generated || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+
+        <q-separator />
+
+        <q-item-label header>Readiness</q-item-label>
+
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Prerequisites</q-item-label>
+                <q-item-label>{{ (project.prerequisites && project.prerequisites.length && project.prerequisites.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Feasibility Study</q-item-label>
+                <q-item-label>
+                  Does the conduct of the FS need assistance (e.g. from NEDA)? {{ project.feasibility_study.needs_assistance ? 'Yes' : 'No' }}
+                </q-item-label>
+                <q-item-label>
+                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                    <thead>
+                    <tr>
+                      <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td v-for="i in 10" :key="i" class="text-right">
+                        {{ project.feasibility_study[`y${2015+i}`] }}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </q-markup-table>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Right of Way</q-item-label>
+                <q-item-label>
+                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                    <thead>
+                      <tr>
+                        <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td v-for="i in 10" :key="i" class="text-right">
+                          {{ project.right_of_way[`y${2015+i}`] }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </q-markup-table>
+                </q-item-label>
+                <q-item-label>
+                  Affected households: {{ project.right_of_way.affected_households }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Resettlement Action Plan</q-item-label>
+                <q-item-label>
+                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                    <thead>
+                    <tr>
+                      <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td v-for="i in 10" :key="i" class="text-right">
+                        {{ project.resettlement_action_plan[`y${2015+i}`] }}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </q-markup-table>
+                </q-item-label>
+                <q-item-label>
+                  Affected households: {{ project.resettlement_action_plan.affected_households }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+
+        <q-separator />
+
+        <q-item-label header>Financial Information</q-item-label>
+
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Main Funding Source</q-item-label>
+                <q-item-label>{{ (project.funding_source && project.funding_source.name) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Other Funding Sources</q-item-label>
+                <q-item-label>{{ (project.funding_sources && project.funding_sources.length && project.funding_sources.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Funding Institutions</q-item-label>
+                <q-item-label>{{ (project.funding_institutions && project.funding_institutions.length && project.funding_institutions.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Implementation Mode</q-item-label>
+                <q-item-label>{{ (project.implementation_mode && project.implementation_mode.name) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Budget Tier (2TBA) Classification</q-item-label>
+                <q-item-label>{{ (project.tier && project.tier.name) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>UACS Code</q-item-label>
+                <q-item-label>{{ project.uacs_code || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+
+        <q-separator />
+
+        <q-item-label header>Updates</q-item-label>
+
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Project Status</q-item-label>
+                <q-item-label>{{ (project.project_status && project.project_status.name) || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Financial Accomplishments</q-item-label>
+                <q-item-label>
+                  <q-markup-table />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Updates</q-item-label>
+                <q-item-label>{{ project.updates || '-' }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>As of</q-item-label>
+                <q-item-label>{{ project.updates_date || '-' }}</q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -419,3 +622,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.q-item__label--header {
+  color: #00242c !important;
+  font-weight: bold;
+}
+</style>
