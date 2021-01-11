@@ -8,8 +8,10 @@
         <div class="text-h5 text-weight-bolder">
           {{project.title}}
         </div>
-        <div class="text-subtitle1">
-          {{project.description}}
+        <div class="text-subtitle1 q-mt-sm">
+          <q-item-label :lines="5">
+            {{project.description}}
+          </q-item-label>
         </div>
         <div class="row items-center">
           <q-icon name="person" /> &nbsp;Created by {{(project.creator && project.creator.name) || '-'}} on {{project.created_at}}
@@ -476,6 +478,78 @@
             </q-item>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <q-markup-table dense flat bordered class="bg-transparent" square>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                  <th class="text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>NEP</td>
+                  <td class="text-right" v-for="i in 10" :key="i">{{ project.nep[`y${2015+i}`] | money }}</td>
+                  <td class="text-right">
+                    {{
+                      Object.keys(project.nep).reduce((acc, d) => {
+                        const exclude = ['id','uuid','links']
+
+                        if (exclude.includes(d)) {
+                          return acc += 0
+                        }
+
+                        acc += parseFloat(project.nep[d]) || 0
+
+                        return acc
+                      }, 0) | money
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>GAA</td>
+                  <td class="text-right" v-for="i in 10" :key="i">{{ project.allocation[`y${2015+i}`]  | money }}</td>
+                  <td class="text-right">
+                    {{
+                      Object.keys(project.allocation).reduce((acc, d) => {
+                        const exclude = ['id','uuid','links']
+
+                        if (exclude.includes(d)) {
+                          return acc += 0
+                        }
+
+                        acc += parseFloat(project.allocation[d]) || 0
+
+                        return acc
+                      }, 0) | money
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Disbursement</td>
+                  <td class="text-right" v-for="i in 10" :key="i">{{ project.disbursement[`y${2015+i}`] | money }}</td>
+                  <td class="text-right">
+                    {{
+                      Object.keys(project.disbursement).reduce((acc, d) => {
+                        const exclude = ['id','uuid','links']
+
+                        if (exclude.includes(d)) {
+                          return acc += 0
+                        }
+
+                        acc += parseFloat(project.disbursement[d]) || 0
+
+                        return acc
+                      }, 0) | money
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </q-markup-table>
+          </div>
+        </div>
 
         <q-separator />
 
@@ -614,6 +688,15 @@ export default {
       ProjectAPI.show(slug)
         .then(res => (this.project = res.data))
         .catch(err => console.log(err.message))
+    }
+  },
+  filters: {
+    money(value) {
+      console.log(value)
+      if (value) {
+        return value.toLocaleString()
+      }
+      return 0
     }
   },
   created() {

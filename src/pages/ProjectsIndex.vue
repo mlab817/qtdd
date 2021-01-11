@@ -147,11 +147,23 @@ export default {
   },
   filters: {
     searchHighlight(value, search) {
-      if (search) {
-        const searchRegExp = new RegExp(search, 'ig')
-        return value && value.replace(searchRegExp, match => {
-          return `<span class="bg-yellow-6">${match}</span>`
-        })
+      // if (search) {
+      //   let regex = new RegExp(search, 'ig');
+      //   return value && value.replace(regex, (match) => {
+      //     return `<span class="bg-yellow-6">${match}</span>`;
+      //   });
+      // }
+      const keywords = search && search.split(/[., -]/)
+      if (keywords && keywords.length) {
+        return keywords.reduce((value, word) => {
+          console.log(word)
+          const regex = new RegExp(word, 'ig')
+          const valueToReturn = value && value.replace(regex, (match) => {
+            return `<span class="bg-yellow-6">${match}</span>`
+          })
+          console.log(valueToReturn)
+          return valueToReturn
+        }, value)
       }
       return value
     }
