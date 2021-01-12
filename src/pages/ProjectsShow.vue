@@ -239,6 +239,8 @@
               </q-item-section>
             </q-item>
           </div>
+        </div>
+        <div class="row">
           <div class="col">
             <q-item>
               <q-item-section>
@@ -252,6 +254,34 @@
             </q-item>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Investment Requirement by Funding Source (PhP)</q-item-label>
+                <q-item-label>
+                  <q-markup-table flat bordered dense square class="bg-transparent">
+                    <thead>
+                    <tr>
+                      <th style="width: 8.33%">Funding Source</th>
+                      <th style="width: 8.33%" class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%" class="text-right">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(fs, index) in project.fs_infrastructures" :key="index">
+                      <td>{{ fs.funding_source && fs.funding_source.name }}</td>
+                      <td class="text-right" v-for="i in 10" :key="i">{{ fs[`y${2015+i}`] | money }}</td>
+                      <td class="text-right">{{ fs.total | money }}</td>
+                    </tr>
+                    </tbody>
+                  </q-markup-table>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+
         <q-separator></q-separator>
         <q-item-label header>Strategic Alignment</q-item-label>
         <div class="row">
@@ -287,7 +317,11 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Sustainable Development Goals</q-item-label>
-                <q-item-label>{{ (project.sdgs && project.sdgs.length && project.sdgs.map(pc => `${pc.id} - ${pc.name}`).join(', ')) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.sdgs
+                    && project.sdgs.length
+                    && project.sdgs.map(pc => `${pc.id} - ${pc.name}`).join(', ')) || '-' }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -297,7 +331,11 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>0 + 10 Point Socio-Economic Agenda</q-item-label>
-                <q-item-label>{{ (project.ten_point_agendas && project.ten_point_agendas.length && project.ten_point_agendas.map(pc => `${pc.id} - ${pc.name}`).join(', ')) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.ten_point_agendas
+                    && project.ten_point_agendas.length
+                    && project.ten_point_agendas.map(pc => `${pc.id} - ${pc.name}`).join(', ')) || '-' }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -330,11 +368,15 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Prerequisites</q-item-label>
-                <q-item-label>{{ (project.prerequisites && project.prerequisites.length && project.prerequisites.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.prerequisites
+                    && project.prerequisites.length
+                    && project.prerequisites.map(x => x.name).join(', ')) || '-' }}</q-item-label>
               </q-item-section>
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
@@ -344,16 +386,22 @@
                   Does the conduct of the FS need assistance (e.g. from NEDA)? {{ project.feasibility_study.needs_assistance ? 'Yes' : 'No' }}
                 </q-item-label>
                 <q-item-label>
-                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                  <q-markup-table flat dense square class="bg-transparent" bordered wrap-cells>
                     <thead>
                     <tr>
-                      <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%"></th>
+                      <th style="width: 8.33%" class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%" class="text-right">Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                      <td>Feasibility Study</td>
                       <td v-for="i in 10" :key="i" class="text-right">
                         {{ project.feasibility_study[`y${2015+i}`] }}
+                      </td>
+                      <td class="text-right">
+                        {{ project.feasibility_study.total | money }}
                       </td>
                     </tr>
                     </tbody>
@@ -363,22 +411,29 @@
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Right of Way</q-item-label>
                 <q-item-label>
-                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                  <q-markup-table flat dense square class="bg-transparent" bordered wrap-cells>
                     <thead>
                       <tr>
-                        <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                        <th style="width: 8.33%"></th>
+                        <th style="width: 8.33%" class="col text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                        <th style="width: 8.33%" class="col text-right">Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
+                        <td>Right of Way</td>
                         <td v-for="i in 10" :key="i" class="text-right">
                           {{ project.right_of_way[`y${2015+i}`] }}
+                        </td>
+                        <td class="text-right">
+                          {{ project.right_of_way.total | money }}
                         </td>
                       </tr>
                     </tbody>
@@ -391,22 +446,29 @@
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Resettlement Action Plan</q-item-label>
                 <q-item-label>
-                  <q-markup-table flat dense square class="bg-transparent" bordered>
+                  <q-markup-table flat dense square class="bg-transparent" bordered wrap-cells>
                     <thead>
                     <tr>
-                      <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%"></th>
+                      <th style="width: 8.33%" class="col text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%" class="col text-right">Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                      <td>Resettlement Action Plan</td>
                       <td v-for="i in 10" :key="i" class="text-right">
                         {{ project.resettlement_action_plan[`y${2015+i}`] }}
+                      </td>
+                      <td class="text-right">
+                        {{ project.resettlement_action_plan.total | money }}
                       </td>
                     </tr>
                     </tbody>
@@ -437,7 +499,11 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Other Funding Sources</q-item-label>
-                <q-item-label>{{ (project.funding_sources && project.funding_sources.length && project.funding_sources.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.funding_sources
+                    && project.funding_sources.length
+                    && project.funding_sources.map(x => x.name).join(', ')) || '-' }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -445,21 +511,29 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Funding Institutions</q-item-label>
-                <q-item-label>{{ (project.funding_institutions && project.funding_institutions.length && project.funding_institutions.map(x => x.name).join(', ')) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.funding_institutions
+                    && project.funding_institutions.length
+                    && project.funding_institutions.map(x => x.name).join(', ')) || '-' }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
               <q-item-section>
                 <q-item-label caption>Implementation Mode</q-item-label>
-                <q-item-label>{{ (project.implementation_mode && project.implementation_mode.name) || '-' }}</q-item-label>
+                <q-item-label>
+                  {{ (project.implementation_mode && project.implementation_mode.name) || '-' }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
@@ -478,24 +552,54 @@
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
               <q-item-section>
+                <q-item-label caption>Investment Requirement by Funding Source (PhP)</q-item-label>
                 <q-item-label>
                   <q-markup-table flat bordered dense square class="bg-transparent">
                     <thead>
                       <tr>
-                        <th>Funding Source</th>
-                        <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
-                        <th>Total</th>
+                        <th style="width: 8.33%">Funding Source</th>
+                        <th style="width: 8.33%" class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                        <th style="width: 8.33%" class="text-right">Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(fs, index) in project.fs_investments" :key="index">
                         <td>{{ fs.funding_source && fs.funding_source.name }}</td>
                         <td class="text-right" v-for="i in 10" :key="i">{{ fs[`y${2015+i}`] | money }}</td>
-                        <td></td>
+                        <td class="text-right">{{ fs.total | money }}</td>
+                      </tr>
+                    </tbody>
+                  </q-markup-table>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>Investment Requirement by Region (PhP)</q-item-label>
+                <q-item-label>
+                  <q-markup-table flat bordered dense square class="bg-transparent">
+                    <thead>
+                    <tr>
+                      <th style="width: 8.33%">Region</th>
+                      <th style="width: 8.33%" class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                      <th style="width: 8.33%" class="text-right">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(ri, index) in project.region_investments" :key="index">
+                        <td>{{ ri.region && ri.region.name }}</td>
+                        <td class="text-right" v-for="i in 10" :key="i">{{ ri[`y${2015+i}`] | money }}</td>
+                        <td class="text-right">{{ ri.total | money }}</td>
                       </tr>
                     </tbody>
                   </q-markup-table>
@@ -519,6 +623,7 @@
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
@@ -530,9 +635,9 @@
                       <q-markup-table dense flat bordered class="bg-transparent" square>
                         <thead>
                         <tr>
-                          <th></th>
-                          <th class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
-                          <th class="text-right">Total</th>
+                          <th style="width: 8.33%"></th>
+                          <th style="width: 8.33%" class="text-right" v-for="i in 10" :key="i">{{ 2015+i }}</th>
+                          <th style="width: 8.33%" class="text-right">Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -540,57 +645,21 @@
                           <td>NEP</td>
                           <td class="text-right" v-for="i in 10" :key="i">{{ project.nep[`y${2015+i}`] | money }}</td>
                           <td class="text-right">
-                            {{
-                              Object.keys(project.nep).reduce((acc, d) => {
-                                const exclude = ['id','uuid','links']
-
-                                if (exclude.includes(d)) {
-                                  return acc += 0
-                                }
-
-                                acc += parseFloat(project.nep[d]) || 0
-
-                                return acc
-                              }, 0) | money
-                            }}
+                            {{ project.nep.total | money }}
                           </td>
                         </tr>
                         <tr>
                           <td>GAA</td>
                           <td class="text-right" v-for="i in 10" :key="i">{{ project.allocation[`y${2015+i}`]  | money }}</td>
                           <td class="text-right">
-                            {{
-                              Object.keys(project.allocation).reduce((acc, d) => {
-                                const exclude = ['id','uuid','links']
-
-                                if (exclude.includes(d)) {
-                                  return acc += 0
-                                }
-
-                                acc += parseFloat(project.allocation[d]) || 0
-
-                                return acc
-                              }, 0) | money
-                            }}
+                            {{ project.allocation.total | money }}
                           </td>
                         </tr>
                         <tr>
                           <td>Disbursement</td>
                           <td class="text-right" v-for="i in 10" :key="i">{{ project.disbursement[`y${2015+i}`] | money }}</td>
                           <td class="text-right">
-                            {{
-                              Object.keys(project.disbursement).reduce((acc, d) => {
-                                const exclude = ['id','uuid','links']
-
-                                if (exclude.includes(d)) {
-                                  return acc += 0
-                                }
-
-                                acc += parseFloat(project.disbursement[d]) || 0
-
-                                return acc
-                              }, 0) | money
-                            }}
+                            {{ project.disbursement.total | money }}
                           </td>
                         </tr>
                         </tbody>
@@ -602,6 +671,7 @@
             </q-item>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
             <q-item>
@@ -620,10 +690,6 @@
         </div>
       </q-card>
     </div>
-
-    <pre>
-      {{project}}
-    </pre>
   </q-page>
 </template>
 
@@ -676,6 +742,54 @@ export default {
         funding_source: {},
         implementation_mode_id: null,
         implementation_mode: {},
+        fs_investments: [
+          {
+            funding_source: {},
+            y2016: 0,
+            y2017: 0,
+            y2018: 0,
+            y2019: 0,
+            y2020: 0,
+            y2021: 0,
+            y2022: 0,
+            y2023: 0,
+            y2024: 0,
+            y2025: 0,
+            total: 0
+          }
+        ],
+        fs_infrastructures: [
+          {
+            funding_source: {},
+            y2016: 0,
+            y2017: 0,
+            y2018: 0,
+            y2019: 0,
+            y2020: 0,
+            y2021: 0,
+            y2022: 0,
+            y2023: 0,
+            y2024: 0,
+            y2025: 0,
+            total: 0
+          }
+        ],
+        region_investments: [
+          {
+            region: {},
+            y2016: 0,
+            y2017: 0,
+            y2018: 0,
+            y2019: 0,
+            y2020: 0,
+            y2021: 0,
+            y2022: 0,
+            y2023: 0,
+            y2024: 0,
+            y2025: 0,
+            total: 0
+          }
+        ],
         other_fs: null,
         project_status_id: null,
         project_status: {},
