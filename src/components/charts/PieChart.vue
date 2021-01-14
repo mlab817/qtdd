@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-sm text-white" style="background-image: linear-gradient(to right, #09203f 0%, #537895 100%);">
     <q-card-section class="text-h6">
-      Total Investment Requirement by Region
+      Total Investment Requirement by Region (2017-2022)
     </q-card-section>
     <q-card-section class="q-pa-none q-pt-md">
       <e-charts style="height: 300px;" :option="options" :resizable="true"></e-charts>
@@ -25,6 +25,7 @@ export default {
             name: 'Total Investment',
             type: 'pie',
             radius: ['50%', '70%'],
+            center: ['50%', '50%'],
             avoidLabelOverlap: false,
             label: {
               normal: {
@@ -57,16 +58,12 @@ export default {
         this.options.series[0].data = data.map(({ name, investment }) => {
           return {
             name: name,
-            value: parseFloat(investment.y2016) / 1000000000 || 0 +
-                  parseFloat(investment.y2017) / 1000000000 || 0 +
+            value: Math.round(parseFloat(investment.y2017) / 1000000000 || 0 +
                   parseFloat(investment.y2018) / 1000000000 || 0 +
                   parseFloat(investment.y2019) / 1000000000 || 0 +
                   parseFloat(investment.y2020) / 1000000000 || 0 +
                   parseFloat(investment.y2021) / 1000000000 || 0 +
-                  parseFloat(investment.y2022) / 1000000000 || 0 +
-                  parseFloat(investment.y2023) / 1000000000 || 0 +
-                  parseFloat(investment.y2024) / 1000000000 || 0 +
-                  parseFloat(investment.y2025) / 1000000000 || 0
+                  parseFloat(investment.y2022) / 1000000000 || 0)
           }
         }).sort((a, b) => {
           return b.value - a.value
