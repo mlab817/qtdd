@@ -16,16 +16,19 @@
 
         <bar-chart />
       </div>
-      <div class="col"></div>
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <pie-chart></pie-chart>
+      </div>
     </div>
   </q-page>
 </template>
 
 <script>
 import BarChart from 'components/charts/BarChart'
+import PieChart from 'components/charts/PieChart'
 
 export default {
   name: 'PageIndex',
-  components: { BarChart }
+  components: { PieChart, BarChart }
 }
 </script>
