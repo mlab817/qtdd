@@ -18,7 +18,26 @@
 <script>
 export default {
   name: 'BarChart',
-  props: ['title', 'xAxis', 'yAxis', 'series'],
+  props: {
+    title: {
+      type: String
+    },
+    xAxis: {
+      type: Array
+    },
+    yAxis: {
+      type: Array
+    },
+    series: {
+      type: Object
+    },
+    columns: {
+      type: Array
+    },
+    legend: {
+      type: Object
+    }
+  },
   data() {
     return {
       loading: true,
@@ -185,7 +204,6 @@ export default {
   created() {
     this.$axios.get('/reports/funding_sources')
       .then(res => {
-        console.log(res.data)
         const reduced = res.data.data && res.data.data.reduce((acc, cur) => {
           const { investment } = cur
           acc['2016'] += (investment && Math.round(investment.y2016 / 1000000000)) || 0

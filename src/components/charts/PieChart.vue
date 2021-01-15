@@ -58,12 +58,12 @@ export default {
         this.options.series[0].data = data.map(({ name, investment }) => {
           return {
             name: name,
-            value: Math.round(parseFloat(investment.y2017) / 1000000000 || 0 +
-                  parseFloat(investment.y2018) / 1000000000 || 0 +
-                  parseFloat(investment.y2019) / 1000000000 || 0 +
-                  parseFloat(investment.y2020) / 1000000000 || 0 +
-                  parseFloat(investment.y2021) / 1000000000 || 0 +
-                  parseFloat(investment.y2022) / 1000000000 || 0)
+            value: Math.round((parseFloat(investment && investment.y2017) / 1000000000) +
+              (parseFloat(investment && investment.y2018) / 1000000000) +
+              (parseFloat(investment && investment.y2019) / 1000000000) +
+              (parseFloat(investment && investment.y2020) / 1000000000) +
+              (parseFloat(investment && investment.y2021) / 1000000000) +
+              (parseFloat(investment && investment.y2022) / 1000000000))
           }
         }).sort((a, b) => {
           return b.value - a.value

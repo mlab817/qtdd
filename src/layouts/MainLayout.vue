@@ -12,11 +12,11 @@
         />
 
         <q-avatar>
-          <img src="../statics/logo/default.png" >
+          <img src="../statics/logo/default.png"  alt="IPMS Logo">
         </q-avatar>
 
         <q-toolbar-title>
-          IPMS
+          IPMS v2
         </q-toolbar-title>
       </q-toolbar>
       <q-separator />
