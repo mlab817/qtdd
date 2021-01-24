@@ -11,10 +11,12 @@
     "build": "quasar build -m spa"
   },
   "dependencies": {
+    "@chartisan/echarts": "^2.2.3",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
     "echarts": "^5.0.0",
+    "echarts-gl": "^2.0.0",
     "lodash-es": "^4.17.20",
     "quasar": "^1.0.0",
     "v-money": "^0.8.1",
