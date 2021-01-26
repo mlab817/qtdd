@@ -21,6 +21,8 @@
       <e-charts style="height: 300px;" :options="barOptions3"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions4"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions5"></e-charts>
+      <e-charts style="height: 300px;" :options="barOptions6"></e-charts>
+      <e-charts style="height: 300px;" :options="barOptions7"></e-charts>
     </div>
   </q-page>
 </template>
@@ -175,6 +177,64 @@ export default {
           data: [],
           type: 'bar'
         }]
+      },
+      barOptions6: {
+        renderer: 'svg',
+        title: {
+          text: ''
+        },
+        tooltip: {
+          show: true
+        },
+        xAxis: {
+          type: 'category',
+          data: [],
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            rotate: 90
+          }
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          data: [],
+          type: 'bar'
+        }]
+      },
+      barOptions7: {
+        renderer: 'svg',
+        title: {
+          text: ''
+        },
+        legend: {
+          top: '5%',
+          left: 'right'
+        },
+        tooltip: {
+          show: true
+        },
+        xAxis: {
+          show: false
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          data: [],
+          type: 'pie',
+          radius: ['40%', '70%'],
+          labelLine: {
+            show: true
+          }
+        }]
       }
     }
   },
@@ -208,6 +268,25 @@ export default {
         this.barOptions5.title.text = res.data.title
         this.barOptions5.xAxis.data = res.data.categories
         this.barOptions5.series[0].data = res.data.data
+      })
+    this.$axios.get('/chart/office')
+      .then(res => {
+        this.barOptions6.title.text = res.data.title
+        this.barOptions6.xAxis.data = res.data.categories
+        this.barOptions6.series[0].data = res.data.data
+      })
+    this.$axios.get('/chart/pip')
+      .then(res => {
+        this.barOptions7.title.text = res.data.title
+        // this.barOptions7.xAxis.data = res.data.categories
+        const data = []
+        Object.keys(res.data.original).forEach(key => {
+          data.push({
+            name: key,
+            value: res.data.original[key]
+          })
+        })
+        this.barOptions7.series[0].data = data
       })
   }
 }
