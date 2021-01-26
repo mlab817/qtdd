@@ -23,13 +23,17 @@
       <e-charts style="height: 300px;" :options="barOptions5"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions6"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions7"></e-charts>
+      <bar-chart></bar-chart>
     </div>
   </q-page>
 </template>
 
 <script>
+import BarChart from 'components/charts/BarChart'
+
 export default {
   name: 'PageIndex',
+  components: { BarChart },
   data() {
     return {
       chart: null,

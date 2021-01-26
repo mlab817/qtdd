@@ -7,7 +7,13 @@
       </q-btn>
     </q-card-section>
     <q-card-section class="q-pa-none q-pt-md">
-      <e-charts style="height: 300px;" ref="barRef" @ready="onReady" :option="options" :resizable="true"></e-charts>
+      <e-charts
+        style="height: 300px;"
+        ref="barRef"
+        @ready="onReady"
+        :option="options"
+        :resizable="true">
+      </e-charts>
     </q-card-section>
   </q-card>
 </template>
@@ -100,7 +106,9 @@ export default {
       downloadLink.click()
     },
     onReady(instance, echarts) {
+      this.$refs.barRef.showLoading()
       this.echarts = echarts
+      instance.showLoading()
     }
   }
 }

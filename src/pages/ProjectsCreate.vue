@@ -400,6 +400,7 @@
                 <div class="col">
                   <form-label label="Funding Institutions" :required="true" />
                   <q-select
+                    filled
                     multiple
                     v-model="project.funding_institutions"
                     :options="options.funding_institutions"
@@ -489,13 +490,10 @@
             </q-tab-panel>
 
             <q-tab-panel :name="8">
-              <div class="text-h5 text-weight-bolder text-primary">Review &amp; Submit</div>
+              <div class="text-h5 text-weight-bolder text-primary">Review &amp; Submit: {{ project.title }}</div>
               <q-separator />
 
-              <p>Preview (Linked to Project Show)</p>
-              <pre>
-                {{ project }}
-              </pre>
+              <project-view class="q-py-md" :project="project"></project-view>
 
               <div class="row justify-between q-mt-md">
                 <q-btn icon="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
@@ -518,9 +516,10 @@ import MoneyInput from 'components/MoneyInput'
 import OuInvestments from 'components/ProjectsCreate/OuInvestments'
 import CustomCheckboxes from 'components/CustomCheckboxes'
 import CustomSelect from 'components/CustomSelect'
+import ProjectView from 'components/ProjectView'
 
 export default {
-  components: { CustomSelect, CustomCheckboxes, OuInvestments, MoneyInput, CustomCheckbox, FormLabel, CustomInput },
+  components: { ProjectView, CustomSelect, CustomCheckboxes, OuInvestments, MoneyInput, CustomCheckbox, FormLabel, CustomInput },
   data () {
     return {
       tab: 1,
