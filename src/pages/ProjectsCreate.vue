@@ -215,7 +215,7 @@
               <custom-input type="textarea" v-model="project.risks" placeholder="Insert implementation risks and mitigation strategies" />
 
               <div class="row justify-between q-mt-md">
-                <q-btn icon-right="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
+                <q-btn icon="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
                 <q-btn icon-right="arrow_right" label="Next" no-caps @click="nextTab" color="primary" />
               </div>
             </q-tab-panel>
@@ -310,15 +310,6 @@
                     </q-item-label>
                     <q-item-label>
                       <div class="row q-col-gutter-sm">
-<!--                        <money-input label="2017" v-model="project.feasibility_study.y2017" />-->
-<!--                        <money-input label="2018" v-model="project.feasibility_study.y2018" />-->
-<!--                        <money-input label="2019" v-model="project.feasibility_study.y2019" />-->
-<!--                        <money-input label="2020" v-model="project.feasibility_study.y2020" />-->
-<!--                        <money-input label="2021" v-model="project.feasibility_study.y2021" />-->
-<!--                        <money-input label="2022" v-model="project.feasibility_study.y2022" />-->
-<!--                        <money-input label="2023" v-model="project.feasibility_study.y2023" />-->
-<!--                        <money-input label="2024" v-model="project.feasibility_study.y2024" />-->
-<!--                        <money-input label="2025" v-model="project.feasibility_study.y2025" />-->
                         <template v-for="i in 5">
                           <money-input :key="i" v-model="project.feasibility_study[`y${2020+i}`]" :label="`${2020+i}`"></money-input>
                         </template>
@@ -332,15 +323,6 @@
                   <q-item-section>
                     <q-item-label>
                       <div class="row q-col-gutter-sm">
-<!--                        <money-input label="2017" v-model="project.right_of_way.y2017" />-->
-<!--                        <money-input label="2018" v-model="project.right_of_way.y2018" />-->
-<!--                        <money-input label="2019" v-model="project.right_of_way.y2019" />-->
-<!--                        <money-input label="2020" v-model="project.right_of_way.y2020" />-->
-<!--                        <money-input label="2021" v-model="project.right_of_way.y2021" />-->
-<!--                        <money-input label="2022" v-model="project.right_of_way.y2022" />-->
-<!--                        <money-input label="2023" v-model="project.right_of_way.y2023" />-->
-<!--                        <money-input label="2024" v-model="project.right_of_way.y2024" />-->
-<!--                        <money-input label="2025" v-model="project.right_of_way.y2025" />-->
                         <template v-for="i in 5">
                           <money-input :key="i" v-model="project.right_of_way[`y${2020+i}`]" :label="`${2020+i}`"></money-input>
                         </template>
@@ -357,15 +339,6 @@
                   <q-item-section>
                     <q-item-label>
                       <div class="row q-col-gutter-sm">
-<!--                        <money-input label="2017" v-model="project.resettlement_action_plan.y2017" />-->
-<!--                        <money-input label="2018" v-model="project.resettlement_action_plan.y2018" />-->
-<!--                        <money-input label="2019" v-model="project.resettlement_action_plan.y2019" />-->
-<!--                        <money-input label="2020" v-model="project.resettlement_action_plan.y2020" />-->
-<!--                        <money-input label="2021" v-model="project.resettlement_action_plan.y2021" />-->
-<!--                        <money-input label="2022" v-model="project.resettlement_action_plan.y2022" />-->
-<!--                        <money-input label="2023" v-model="project.resettlement_action_plan.y2023" />-->
-<!--                        <money-input label="2024" v-model="project.resettlement_action_plan.y2024" />-->
-<!--                        <money-input label="2025" v-model="project.resettlement_action_plan.y2025" />-->
                         <template v-for="i in 5">
                           <money-input :key="i" v-model="project.resettlement_action_plan[`y${2020+i}`]" :label="`${2020+i}`"></money-input>
                         </template>
@@ -421,6 +394,12 @@
 
               <form-label label="Total Investment Requirement by Operating Unit" />
               <ou-investments option="operating_units" item-id="operating_unit_id" item-name="Operating Unit" v-model="project.ou_investments"></ou-investments>
+
+              <form-label label="Total Investment Requirement by Region" />
+              <ou-investments option="regions" item-id="region_id" item-name="Region" v-model="project.region_investments"></ou-investments>
+
+              <form-label label="Total Investment Requirement by Funding Source" />
+              <ou-investments option="funding_sources" item-id="funding_source_id" item-name="Funding Source" v-model="project.fs_investments"></ou-investments>
 
               <div class="row justify-between q-mt-md">
                 <q-btn icon="arrow_left" label="Back" no-caps @click="previousTab" color="primary" />
