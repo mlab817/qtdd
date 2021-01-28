@@ -24,6 +24,8 @@
       <e-charts style="height: 300px;" :options="barOptions5" ref="bar5"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions6" ref="bar6"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions7" ref="bar7"></e-charts>
+      <e-charts style="height: 300px;" :options="barOptions8" ref="bar8"></e-charts>
+      {{ barOptions3 }}
     </div>
   </q-page>
 </template>
@@ -41,27 +43,35 @@ export default {
         title: {
           text: ''
         },
+        dataset: {
+          source: [],
+          dimensions: []
+        },
         tooltip: {
           show: true
         },
-        xAxis: {
-          type: 'category',
-          data: [],
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
           }
         },
-        yAxis: {
-          type: 'value',
-          show: true
+        xAxis: {
+          type: 'category'
         },
-        series: [{
-          data: [],
-          type: 'bar'
-        }]
+        yAxis: [
+          {
+            type: 'value',
+            show: true
+          },
+          {
+            type: 'value',
+            show: true
+          }
+        ],
+        series: []
       },
       barOptions2: {
         renderer: 'svg',
@@ -70,6 +80,14 @@ export default {
         },
         tooltip: {
           show: true
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         xAxis: {
           type: 'category',
@@ -97,6 +115,14 @@ export default {
         },
         tooltip: {
           show: true
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         xAxis: {
           type: 'category',
@@ -128,6 +154,14 @@ export default {
         tooltip: {
           show: true
         },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
         xAxis: {
           type: 'category',
           data: [],
@@ -158,6 +192,14 @@ export default {
         tooltip: {
           show: true
         },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
         xAxis: {
           type: 'category',
           data: [],
@@ -187,6 +229,14 @@ export default {
         },
         tooltip: {
           show: true
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
         },
         xAxis: {
           type: 'category',
@@ -222,8 +272,57 @@ export default {
         tooltip: {
           show: true
         },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
         xAxis: {
           show: false
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          data: [],
+          type: 'pie',
+          radius: ['40%', '70%'],
+          labelLine: {
+            show: true
+          }
+        }]
+      },
+      barOptions8: {
+        renderer: 'svg',
+        title: {
+          text: ''
+        },
+        dataset: {
+          source: [],
+          dimensions: []
+        },
+        legend: {
+          top: '5%',
+          left: 'right'
+        },
+        tooltip: {
+          show: true
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        xAxis: {
+          type: 'category',
+          show: true
         },
         yAxis: {
           type: 'value',
@@ -247,7 +346,8 @@ export default {
       bar4 = this.$refs.bar4,
       bar5 = this.$refs.bar5,
       bar6 = this.$refs.bar6,
-      bar7 = this.$refs.bar7
+      bar7 = this.$refs.bar7,
+      bar8 = this.$refs.bar8
     bar1.showLoading()
     bar2.showLoading()
     bar3.showLoading()
@@ -255,15 +355,32 @@ export default {
     bar5.showLoading()
     bar6.showLoading()
     bar7.showLoading()
+    bar8.showLoading()
     this.$axios.get('/chart/spatial_coverages')
       .then(res => {
         this.barOptions.title.text = res.data.title
-        this.barOptions.xAxis.data = res.data.categories
-        this.barOptions.series[0].data = res.data.data
+        this.barOptions.dataset.dimensions = [
+          'name',
+          'project_count',
+          'total'
+        ]
+        this.barOptions.dataset.source = res.data.original
+        this.barOptions.series = [
+          {
+            name: 'No. of Projects',
+            type: 'bar'
+          },
+          {
+            name: 'Total Investment Requirements',
+            type: 'bar',
+            yAxisIndex: 1
+          }
+        ]
       })
       .finally(() => bar1.hideLoading())
     this.$axios.get('/chart/pap_types')
       .then(res => {
+        // this.barOptions.title.text = res.data.title
         this.barOptions2.title.text = res.data.title
         this.barOptions2.xAxis.data = res.data.categories
         this.barOptions2.series[0].data = res.data.data
@@ -311,6 +428,37 @@ export default {
         this.barOptions7.series[0].data = data
       })
       .finally(() => bar7.hideLoading())
+    this.$axios.get('/chart/sc_investments')
+      .then(res => {
+        this.barOptions8.title.text = res.data.title
+        this.barOptions8.dataset.dimensions = [
+          'name',
+          'y2016',
+          'y2017',
+          'y2018',
+          'u2019',
+          'y2020',
+          'y2021',
+          'y2022',
+          'y2023',
+          'y2024',
+          'y2025'
+        ]
+        this.barOptions8.dataset.source = res.data.original
+        this.barOptions8.series = [
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' },
+          { type: 'bar' }
+        ]
+      })
+      .finally(() => bar8.hideLoading())
   }
 }
 </script>
