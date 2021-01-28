@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-md">
+    <div class="row q-col-gutter-md" v-if="showBanner">
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="q-pb-md">
           <q-banner class="bg-primary text-white">
@@ -9,6 +9,7 @@
             </template>
             Note: If the data is not loading, please click in the link below to allow access to the backend.
             <template v-slot:action>
+              <q-btn type="a" @click="showBanner = false" label="Dismiss" flat></q-btn>
               <q-btn type="a" href="https://ipms-v2.dapmsipd.org/" label="Go" flat></q-btn>
             </template>
           </q-banner>
@@ -23,19 +24,16 @@
       <e-charts style="height: 300px;" :options="barOptions5"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions6"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions7"></e-charts>
-      <bar-chart></bar-chart>
     </div>
   </q-page>
 </template>
 
 <script>
-import BarChart from 'components/charts/BarChart'
-
 export default {
   name: 'PageIndex',
-  components: { BarChart },
   data() {
     return {
+      showBanner: true,
       chart: null,
       loading: true,
       barOptions: {
@@ -58,7 +56,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
@@ -85,7 +83,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
@@ -115,7 +113,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
@@ -145,7 +143,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
@@ -175,7 +173,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
@@ -205,7 +203,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          show: false
+          show: true
         },
         series: [{
           data: [],
