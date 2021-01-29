@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-md" v-if="showBanner">
+    <div class="row">
+      <card-social />
+    </div>
+    <div class="row q-col-gutter-md q-mt-md" v-if="showBanner">
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="q-pb-md">
           <q-banner class="bg-primary text-white">
@@ -62,10 +65,11 @@
 
 <script>
 import InvestmentTable from 'components/tables/InvestmentTable'
+import CardSocial from 'components/cards/CardSocial'
 
 export default {
   name: 'PageIndex',
-  components: { InvestmentTable },
+  components: { CardSocial, InvestmentTable },
   data() {
     return {
       pip_by_office: [],
