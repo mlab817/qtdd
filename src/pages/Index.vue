@@ -30,7 +30,7 @@
       <q-card class="col">
         <investment-table
           title="PIP Investment Targets by Spatial Coverage"
-          :table-data="by_spatial_coverage"></investment-table>
+          :table-data="pip_by_spatial_coverage"></investment-table>
       </q-card>
       <q-card class="col">
         <investment-table
@@ -50,6 +50,13 @@
           :table-data="pip_by_office"></investment-table>
       </q-card>
     </div>
+    <div class="row q-gutter-md q-mt-md">
+      <q-card class="col">
+        <investment-table
+          title="PIP Investment Targets by Project Status"
+          :table-data="pip_by_project_status"></investment-table>
+      </q-card>
+    </div>
   </q-page>
 </template>
 
@@ -63,93 +70,15 @@ export default {
     return {
       pip_by_office: [],
       cip_by_office: [],
-      by_spatial_coverage: [],
+      pip_by_spatial_coverage: [],
       cip_by_spatial_coverage: [],
       cip_by_implementation_mode: [],
       pip_by_implementation_mode: [],
       pip_by_main_pdp_chapter: [],
+      pip_by_project_status: [],
       pagination: {
         rowsPerPage: 0
       },
-      columns: [
-        {
-          name: 'label',
-          label: 'Office',
-          field: 'label',
-          align: 'left'
-        },
-        {
-          name: 'numPaps',
-          label: 'No. of PAPs',
-          field: 'project_count',
-          align: 'right',
-          sortable: true
-        },
-        {
-          name: '2017',
-          label: '2017',
-          field: '2017',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '2018',
-          label: '2018',
-          field: '2018',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '2019',
-          label: '2019',
-          field: '2019',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '2020',
-          label: '2020',
-          field: '2020',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '2021',
-          label: '2021',
-          field: '2021',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '2022',
-          label: '2022',
-          field: '2022',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: '20172022',
-          label: '2017-2022',
-          field: row => (parseFloat(row[2017]) + parseFloat(row[2018]) + parseFloat(row[2019]) + parseFloat(row[2020]) + parseFloat(row[2021]) + parseFloat(row[2022])),
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        },
-        {
-          name: 'total',
-          label: 'Total',
-          field: 'total',
-          align: 'right',
-          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
-          sortable: true
-        }
-      ],
       showBanner: true,
       chart: null,
       loading: true,
@@ -547,17 +476,13 @@ export default {
       .then(res => {
         this.barOptions8.title.text = res.data.title
         this.barOptions8.dataset.dimensions = [
-          'name',
-          'y2016',
-          'y2017',
-          'y2018',
-          'u2019',
-          'y2020',
-          'y2021',
-          'y2022',
-          'y2023',
-          'y2024',
-          'y2025'
+          'label',
+          '2017',
+          '2018',
+          '2019',
+          '2020',
+          '2021',
+          '2022'
         ]
         this.barOptions8.dataset.source = res.data.original
         this.barOptions8.series = [
@@ -566,13 +491,9 @@ export default {
           { type: 'bar' },
           { type: 'bar' },
           { type: 'bar' },
-          { type: 'bar' },
-          { type: 'bar' },
-          { type: 'bar' },
-          { type: 'bar' },
           { type: 'bar' }
         ]
-        this.by_spatial_coverage = res.data.original
+        this.pip_by_spatial_coverage = res.data.original
       })
       .finally(() => bar8.hideLoading())
     this.$axios.get('/chart/pip_by_office')
@@ -598,6 +519,10 @@ export default {
     this.$axios.get('/chart/pip_by_main_pdp_chapter')
       .then(res => {
         this.pip_by_main_pdp_chapter = res.data.original
+      })
+    this.$axios.get('/chart/pip_by_project_status')
+      .then(res => {
+        this.pip_by_project_status = res.data.original
       })
   }
 }

@@ -15,8 +15,20 @@
         @click="exportTable"
       />
     </template>
+    <template v-slot:header="props">
+      <q-tr :props="props" class="bg-primary text-white">
+        <q-th
+          v-for="col in props.cols"
+          :key="col.name"
+          :props="props"
+          class="text-weight-bold"
+        >
+          {{ col.label }}
+        </q-th>
+      </q-tr>
+    </template>
     <template v-slot:bottom-row>
-      <q-tr content-class="text-weight-bold">
+      <q-tr class="text-weight-bold bg-primary text-white">
         <q-td>Grand Total</q-td>
         <q-td align="right">{{ totalsRow.project_count }}</q-td>
         <q-td align="right" v-for="i in 6" :key="i">
