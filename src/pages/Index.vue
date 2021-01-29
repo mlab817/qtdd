@@ -25,16 +25,230 @@
       <e-charts style="height: 300px;" :options="barOptions6" ref="bar6"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions7" ref="bar7"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions8" ref="bar8"></e-charts>
-      {{ barOptions3 }}
+      <q-card>
+        <q-table
+          title="PIP Investment Targets by Office"
+          :data="pip_by_office"
+          :columns="columns"
+          flat
+          bordered
+        >
+          <template v-slot:top-right>
+            <q-btn
+              color="primary"
+              icon-right="archive"
+              label="Export to csv"
+              no-caps
+              @click="exportTable"
+            />
+          </template>
+        </q-table>
+      </q-card>
+      <q-card>
+        <q-table
+          title="CIP Investment Targets by Office"
+          :data="cip_by_office"
+          :columns="columns"
+          :pagination="pagination"
+          hide-pagination
+          dense
+          flat
+          bordered
+        />
+      </q-card>
+      <q-table
+        title="PIP Investment Targets by Spatial Coverage"
+        :data="by_spatial_coverage"
+        :columns="columns"
+        :pagination="pagination"
+        hide-pagination
+        dense
+        flat
+        bordered
+      >
+        <template v-slot:bottom-row>
+          <q-tr>
+            <q-td>
+              Total
+            </q-td>
+            <q-td align="right">
+              {{
+                by_spatial_coverage.reduce((acc, cur) => {
+                  acc += cur.project_count
+                  return acc
+                }, 0)
+              }}
+            </q-td>
+            <q-td align="right" colspan="7">
+              {{
+                by_spatial_coverage.reduce((acc, cur) => {
+                  acc += Math.round(parseFloat(cur.total) / 1000000)
+                  return acc
+                }, 0).toLocaleString()
+              }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+      <q-table
+        title="CIP Investment Targets by Spatial Coverage"
+        :data="cip_by_spatial_coverage"
+        :columns="columns"
+        :pagination="pagination"
+        hide-pagination
+        dense
+        flat
+        bordered
+      />
+      <q-table
+        title="CIP Investment Targets by Implementation Mode"
+        :data="cip_by_implementation_mode"
+        :columns="columns"
+        :pagination="pagination"
+        hide-pagination
+        dense
+        flat
+        wrap-cells
+        bordered
+      />
+      <q-table
+        title="PIP Investment Targets by Implementation Mode"
+        :data="pip_by_implementation_mode"
+        :columns="columns"
+        :pagination="pagination"
+        hide-pagination
+        dense
+        flat
+        wrap-cells
+        bordered
+      />
+      <q-table
+        title="PIP Investment Targets by PDP Chapter"
+        :data="pip_by_main_pdp_chapter"
+        :columns="columns"
+        :pagination="pagination"
+        hide-pagination
+        dense
+        flat
+        wrap-cells
+        bordered
+      />
     </div>
   </q-page>
 </template>
 
 <script>
+import { exportFile } from 'quasar'
+function wrapCsvValue(val, formatFn) {
+  let formatted = formatFn !== undefined
+    ? formatFn(val)
+    : val
+  formatted = formatted === undefined || formatted === null
+    ? ''
+    : String(formatted)
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+  return `"${formatted}"`
+}
+
 export default {
   name: 'PageIndex',
   data() {
     return {
+      pip_by_office: [],
+      cip_by_office: [],
+      by_spatial_coverage: [],
+      cip_by_spatial_coverage: [],
+      cip_by_implementation_mode: [],
+      pip_by_implementation_mode: [],
+      pip_by_main_pdp_chapter: [],
+      pagination: {
+        rowsPerPage: 0
+      },
+      columns: [
+        {
+          name: 'label',
+          label: 'Office',
+          field: 'label',
+          align: 'left'
+        },
+        {
+          name: 'numPaps',
+          label: 'No. of PAPs',
+          field: 'project_count',
+          align: 'right',
+          sortable: true
+        },
+        {
+          name: '2017',
+          label: '2017',
+          field: '2017',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '2018',
+          label: '2018',
+          field: '2018',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '2019',
+          label: '2019',
+          field: '2019',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '2020',
+          label: '2020',
+          field: '2020',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '2021',
+          label: '2021',
+          field: '2021',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '2022',
+          label: '2022',
+          field: '2022',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: '20172022',
+          label: '2017-2022',
+          field: row => (parseFloat(row[2017]) + parseFloat(row[2018]) + parseFloat(row[2019]) + parseFloat(row[2020]) + parseFloat(row[2021]) + parseFloat(row[2022])),
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        },
+        {
+          name: 'total',
+          label: 'Total',
+          field: 'total',
+          align: 'right',
+          format: (val, row) => (Math.round(parseFloat(val) / 1000000)).toLocaleString(),
+          sortable: true
+        }
+      ],
       showBanner: true,
       chart: null,
       loading: true,
@@ -339,6 +553,30 @@ export default {
       }
     }
   },
+  methods: {
+    exportTable() {
+      const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
+        this.pip_by_office.map(row => this.columns.map(col => wrapCsvValue(
+          typeof col.field === 'function'
+            ? col.field(row)
+            : row[col.field === undefined ? col.name : col.field],
+          col.format
+        )).join(','))
+      ).join('\r\n')
+      const status = exportFile(
+        'table-export.csv',
+        content,
+        'text/csv'
+      )
+      if (status !== true) {
+        this.$q.notify({
+          message: 'Browser denied file download...',
+          color: 'negative',
+          icon: 'warning'
+        })
+      }
+    }
+  },
   mounted() {
     const bar1 = this.$refs.bar1,
       bar2 = this.$refs.bar2,
@@ -428,7 +666,7 @@ export default {
         this.barOptions7.series[0].data = data
       })
       .finally(() => bar7.hideLoading())
-    this.$axios.get('/chart/sc_investments')
+    this.$axios.get('/chart/pip_by_spatial_coverage')
       .then(res => {
         this.barOptions8.title.text = res.data.title
         this.barOptions8.dataset.dimensions = [
@@ -457,8 +695,33 @@ export default {
           { type: 'bar' },
           { type: 'bar' }
         ]
+        this.by_spatial_coverage = res.data.original
       })
       .finally(() => bar8.hideLoading())
+    this.$axios.get('/chart/pip_by_office')
+      .then(res => {
+        this.pip_by_office = res.data.original
+      })
+    this.$axios.get('/chart/cip_by_office')
+      .then(res => {
+        this.cip_by_office = res.data.original
+      })
+    this.$axios.get('/chart/cip_by_spatial_coverage')
+      .then(res => {
+        this.cip_by_spatial_coverage = res.data.original
+      })
+    this.$axios.get('/chart/pip_by_implementation_mode')
+      .then(res => {
+        this.pip_by_implementation_mode = res.data.original
+      })
+    this.$axios.get('/chart/cip_by_implementation_mode')
+      .then(res => {
+        this.cip_by_implementation_mode = res.data.original
+      })
+    this.$axios.get('/chart/pip_by_main_pdp_chapter')
+      .then(res => {
+        this.pip_by_main_pdp_chapter = res.data.original
+      })
   }
 }
 </script>
