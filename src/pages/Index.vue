@@ -25,139 +25,40 @@
       <e-charts style="height: 300px;" :options="barOptions6" ref="bar6"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions7" ref="bar7"></e-charts>
       <e-charts style="height: 300px;" :options="barOptions8" ref="bar8"></e-charts>
-      <q-card>
-        <q-table
+    </div>
+    <div class="row q-gutter-md q-mt-md">
+      <q-card class="col">
+        <investment-table
+          title="PIP Investment Targets by Spatial Coverage"
+          :table-data="by_spatial_coverage"></investment-table>
+      </q-card>
+      <q-card class="col">
+        <investment-table
+          title="PIP Investment Targets by Implementation Mode"
+          :table-data="pip_by_implementation_mode"></investment-table>
+      </q-card>
+    </div>
+    <div class="row q-gutter-md q-mt-md">
+      <q-card class="col">
+        <investment-table
+          title="PIP Investment Targets by PDP Chapter"
+          :table-data="pip_by_main_pdp_chapter"></investment-table>
+      </q-card>
+      <q-card class="col">
+        <investment-table
           title="PIP Investment Targets by Office"
-          :data="pip_by_office"
-          :columns="columns"
-          flat
-          bordered
-        >
-          <template v-slot:top-right>
-            <q-btn
-              color="primary"
-              icon-right="archive"
-              label="Export to csv"
-              no-caps
-              @click="exportTable"
-            />
-          </template>
-        </q-table>
+          :table-data="pip_by_office"></investment-table>
       </q-card>
-      <q-card>
-        <q-table
-          title="CIP Investment Targets by Office"
-          :data="cip_by_office"
-          :columns="columns"
-          :pagination="pagination"
-          hide-pagination
-          dense
-          flat
-          bordered
-        />
-      </q-card>
-      <q-table
-        title="PIP Investment Targets by Spatial Coverage"
-        :data="by_spatial_coverage"
-        :columns="columns"
-        :pagination="pagination"
-        hide-pagination
-        dense
-        flat
-        bordered
-      >
-        <template v-slot:bottom-row>
-          <q-tr>
-            <q-td>
-              Total
-            </q-td>
-            <q-td align="right">
-              {{
-                by_spatial_coverage.reduce((acc, cur) => {
-                  acc += cur.project_count
-                  return acc
-                }, 0)
-              }}
-            </q-td>
-            <q-td align="right" colspan="7">
-              {{
-                by_spatial_coverage.reduce((acc, cur) => {
-                  acc += Math.round(parseFloat(cur.total) / 1000000)
-                  return acc
-                }, 0).toLocaleString()
-              }}
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
-      <q-table
-        title="CIP Investment Targets by Spatial Coverage"
-        :data="cip_by_spatial_coverage"
-        :columns="columns"
-        :pagination="pagination"
-        hide-pagination
-        dense
-        flat
-        bordered
-      />
-      <q-table
-        title="CIP Investment Targets by Implementation Mode"
-        :data="cip_by_implementation_mode"
-        :columns="columns"
-        :pagination="pagination"
-        hide-pagination
-        dense
-        flat
-        wrap-cells
-        bordered
-      />
-      <q-table
-        title="PIP Investment Targets by Implementation Mode"
-        :data="pip_by_implementation_mode"
-        :columns="columns"
-        :pagination="pagination"
-        hide-pagination
-        dense
-        flat
-        wrap-cells
-        bordered
-      />
-      <q-table
-        title="PIP Investment Targets by PDP Chapter"
-        :data="pip_by_main_pdp_chapter"
-        :columns="columns"
-        :pagination="pagination"
-        hide-pagination
-        dense
-        flat
-        wrap-cells
-        bordered
-      />
     </div>
   </q-page>
 </template>
 
 <script>
-import { exportFile } from 'quasar'
-function wrapCsvValue(val, formatFn) {
-  let formatted = formatFn !== undefined
-    ? formatFn(val)
-    : val
-  formatted = formatted === undefined || formatted === null
-    ? ''
-    : String(formatted)
-  formatted = formatted.split('"').join('""')
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-  return `"${formatted}"`
-}
+import InvestmentTable from 'components/tables/InvestmentTable'
 
 export default {
   name: 'PageIndex',
+  components: { InvestmentTable },
   data() {
     return {
       pip_by_office: [],
@@ -550,30 +451,6 @@ export default {
             show: true
           }
         }]
-      }
-    }
-  },
-  methods: {
-    exportTable() {
-      const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
-        this.pip_by_office.map(row => this.columns.map(col => wrapCsvValue(
-          typeof col.field === 'function'
-            ? col.field(row)
-            : row[col.field === undefined ? col.name : col.field],
-          col.format
-        )).join(','))
-      ).join('\r\n')
-      const status = exportFile(
-        'table-export.csv',
-        content,
-        'text/csv'
-      )
-      if (status !== true) {
-        this.$q.notify({
-          message: 'Browser denied file download...',
-          color: 'negative',
-          icon: 'warning'
-        })
       }
     }
   },
