@@ -11,6 +11,11 @@ const routes = [
         path: 'projects',
         name: 'index-projects',
         component: () => import('pages/ProjectsIndex.vue')
+      },
+      {
+        path: 'regions/:id',
+        name: 'index-regions',
+        component: () => import('pages/ProjectsRegions.vue')
       }
     ]
   },

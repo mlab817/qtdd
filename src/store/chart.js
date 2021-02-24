@@ -56,30 +56,15 @@ const state = () => {
 }
 
 const actions = {
-  fetchPipByRegion({ commit }) {
+  getPipByRegion({ commit }) {
     axiosInstance.get('/chart/pip_by_region')
       .then(res => {
-        // const data = Object.assign({}, JSON.parse(JSON.stringify(chartData2)))
-        // data.title.text = 'Regions'
-        // data.xAxis.data = res.data.data && res.data.data.map(d => d.label)
+        const data = Object.assign({}, JSON.parse(JSON.stringify(chartData)))
+        data.title.text = 'Regions'
+        data.xAxis.data = res.data.data && res.data.data.map(d => d.label)
         // data.dataset.source = res.data.data
-        // // data.series[0].data = res.data.data && res.data.data.map(d => d.project_count)
-        const chart = {
-          xAxis: {
-            scale: true
-          },
-          yAxis: {
-            scale: true
-          },
-          series: [
-            {
-              type: 'scatter',
-              symbolSize: 20,
-              data: []
-            }
-          ]
-        }
-        commit('SET_PIP_BY_REGION', chart)
+        data.series[0].data = res.data.data && res.data.data.map(d => d.project_count)
+        commit('SET_PIP_BY_REGION', data)
       })
       .catch(err => console.log(err.message))
   },

@@ -1,8 +1,5 @@
 <template>
   <q-page padding>
-<!--    <div class="row">-->
-<!--      <card-social />-->
-<!--    </div>-->
     <div class="row q-col-gutter-md q-mt-md" v-if="showBanner">
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="q-pb-md">
@@ -19,23 +16,6 @@
         </div>
       </div>
     </div>
-<!--    <div class="row justify-end">-->
-<!--      <q-select-->
-<!--        :options="[-->
-<!--          {-->
-<!--            label: 'No. of Project',-->
-<!--            value: 'project_count'-->
-<!--          },-->
-<!--          {-->
-<!--            label: 'Total Cost',-->
-<!--            value: 'total'-->
-<!--          }-->
-<!--        ]"-->
-<!--        v-model="type"-->
-<!--        emit-value-->
-<!--        map-options-->
-<!--      ></q-select>-->
-<!--    </div>-->
     <div class="row q-col-gutter-md">
       <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <pip-by-region></pip-by-region>

@@ -23,7 +23,7 @@ export default {
   mounted() {
     const chart = this.$refs.chart
     chart.showLoading()
-    this.$store.dispatch('chart/fetchPipByRegion')
+    this.$store.dispatch('chart/getPipByRegion')
       .then(() => chart.hideLoading())
   }
 }
