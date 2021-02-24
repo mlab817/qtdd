@@ -16,6 +16,16 @@ const routes = [
         path: 'regions/:id',
         name: 'index-regions',
         component: () => import('pages/ProjectsRegions.vue')
+      },
+      {
+        path: 'project_statuses/:id',
+        name: 'projects-fs_statuses',
+        component: () => import('pages/ProjectsStatuses.vue')
+      },
+      {
+        path: 'project_statuses',
+        name: 'index-fs_statuses',
+        component: () => import('pages/StatusesIndex.vue')
       }
     ]
   },

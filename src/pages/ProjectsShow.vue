@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <!-- TODO: Handle loading -->
     <q-card square flat bordered class="bg-primary text-white" v-if="project">
       <q-card-section>
         <div class="text-caption">
@@ -22,18 +23,25 @@
         <div class="row q-gutter-sm q-mt-md">
           <q-btn outline label="Edit" icon-right="edit" :disable="!project.permissions.update" />
           <q-btn outline label="Delete" icon-right="delete" :disable="!project.permissions.delete" />
-          <q-btn outline label="Share" icon-right="share" />
+          <q-btn outline label="Share" icon-right="share" @click="shareProject(project)" />
         </div>
       </q-card-section>
     </q-card>
 
-    <project-view :project="project"></project-view>
+    <q-card class="q-pa-md">
+      <project-view :project="project"></project-view>
+    </q-card>
   </q-page>
 </template>
 
 <script>
 import { ProjectAPI } from 'src/api/projects'
 import ProjectView from 'components/ProjectView'
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(String(email).toLowerCase())
+}
 
 export default {
   name: 'ProjectsShow',
@@ -165,10 +173,27 @@ export default {
       ProjectAPI.show(slug)
         .then(res => (this.project = res.data))
         .catch(err => console.log(err.message))
+    },
+    shareProject(project) {
+      // alert(project.title)
+      this.$q.dialog({
+        title: 'Share Project',
+        message: 'Enter the email you want to share this project to',
+        prompt: {
+          model: '',
+          isValid: val => !!val && validateEmail(val)
+        },
+        cancel: true,
+        persistent: true
+      }).onOk(email => {
+        // TODO: handle email sending for project sharing
+        alert('You sent an email to ' + email)
+      })
     }
   },
   created() {
     const slug = this.$route.params.slug
+    // TODO: Handle 404 not found projects
     this.getProject(slug)
   }
 }
