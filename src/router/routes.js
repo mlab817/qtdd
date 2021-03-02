@@ -26,6 +26,11 @@ const routes = [
         path: 'project_statuses',
         name: 'index-fs_statuses',
         component: () => import('pages/StatusesIndex.vue')
+      },
+      {
+        path: '/modifications',
+        name: 'index-modifications',
+        component: () => import('pages/Pending.vue')
       }
     ]
   },
